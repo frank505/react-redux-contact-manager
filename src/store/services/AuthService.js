@@ -9,7 +9,9 @@ export const SignUpService = (credentials) =>{
     return http.postData(credentials,signUpUrl).then(data=>{
         console.log(JSON.stringify(data));
         return data;
-    }).catch(error=> console.log(error));
+    }).catch((error)=> {console.log(error)
+        return error; 
+         });
 }
 
 export const LoginUser = (credentials,propsHistory) =>{
@@ -19,5 +21,7 @@ export const LoginUser = (credentials,propsHistory) =>{
     return http.postData(credentials,signUpUrl).then(data=>{
         console.log(JSON.stringify(data));
         return data;
-    }).catch(error=> console.log(error));
+    }).catch((error)=> {console.log(error)
+   return error; 
+    });
 }
