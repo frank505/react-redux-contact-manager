@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux'
+import  { addContactUser } from  '../../store/actions/ContactActions'
 
 
 
 
-export default class AddContact extends Component {
+ class AddContact extends Component {
 
     constructor(props)
     {
@@ -25,7 +27,30 @@ export default class AddContact extends Component {
         })
       }
     
+    //this converts a blob type image to base64 encoded string
+      getBase64 = (file,callback) => {
+       const reader = new FileReader();
+       reader.addEventListener('load',()=>callback(reader.result));
+       reader.readAsDataURL(file);
+      }
+
+
+     fileTransform = (e) =>
+     {
+       this.getBase64(e.target.files[0],(base64String)=>{
+         this.state.profile_image = base64String;
+         console.log(this.state)
+       })
+     }
+
+     handleSubmit = (e) =>{
+     e.preventDefault();
+     console.log(this.state);
+     this.props.addContactUser(this.state)
+     }
+
     render() {
+      const {contactResponse} = this.props; 
         return (
             <div>
                   <h1>Adding a new contact</h1>
@@ -80,7 +105,7 @@ export default class AddContact extends Component {
         onChange={this.handleChange}
       />
      
-     <input type="file" id="file_input" /><br/>
+     <input type="file" id="file_input"  onChange={this.fileTransform}/><br/>
 
        <br/>
 
@@ -88,7 +113,7 @@ export default class AddContact extends Component {
        Add A Contact
       </Button><br/>
 
-<b></b>
+        <b>{contactResponse!=null?contactResponse:null}</b>
 
       </form>
                
@@ -96,3 +121,18 @@ export default class AddContact extends Component {
         )
     }
 }
+
+const mapDisPatchToProps = (dispatch) =>{
+  return {
+    addContactUser:(creds) =>dispatch(addContactUser(creds))
+  }
+}
+
+const mapStateToProps = (state) =>{
+    return{
+        contactResponse:state.contact.contactResponse
+    }
+}
+
+
+export default connect(mapStateToProps,mapDisPatchToProps)(AddContact)
