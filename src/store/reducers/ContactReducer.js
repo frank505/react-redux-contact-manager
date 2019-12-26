@@ -1,6 +1,7 @@
 const initState = {
     contactResponse:null,
-    contactMessage:null
+    contactMessage:null,
+    loadContacts:null
 };
 
 
@@ -14,15 +15,31 @@ const ContactReducer = (state=initState, action) =>{
              }
 
            case 'NEW_CONTACT_CODE_ERROR':
-        console.log('hello');
         return {
             ...state,
             contactResponse:'error code '
         }
+        case 'LOAD_CONTACTS':
+            console.log(action.res)
+            return{
+                ...state,
+                loadContacts:action.res
+            }
+      case 'LOAD_CONTACTS_SEARCH':
+        console.log(action.res)
+        return{
+            ...state,
+            loadContacts:action.res
+        }
+            case 'FETCH_CONTACT_ERROR':
+                return{
+                    ...state,
+                    loadContacts:action.error
+                }
         default:
                 return state
     }
-
+      
     
 }
 

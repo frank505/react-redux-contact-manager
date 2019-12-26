@@ -23,6 +23,20 @@
   color: #61dafb;
 }
 
+.pagination-restyle li{
+ list-style: none;
+ display: inline-block;
+ padding:10px;
+ background-color: #3f51b5;
+  color:white;
+  font-weight:bolder;
+  margin:3px;
+}
+.pagination-restyle li:hover{
+  cursor: pointer;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
