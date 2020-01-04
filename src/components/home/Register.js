@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
-import {signUp} from '../../store/actions/AuthAction'
+import {signUp,resetAuthResponsePerComponent} from '../../store/actions/AuthAction'
  class Register extends Component {
 
  constructor(props)
@@ -16,6 +16,10 @@ import {signUp} from '../../store/actions/AuthAction'
   }
  }
 
+ componentDidMount = () =>
+ {
+  this.props.resetAuthResponsePerComponent();
+ }
 
  
 
@@ -112,7 +116,9 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    signUp:(creds) => dispatch(signUp(creds))
+    signUp:(creds) => dispatch(signUp(creds)),
+    resetAuthResponsePerComponent:() =>dispatch(resetAuthResponsePerComponent())
+
   }
 }
 

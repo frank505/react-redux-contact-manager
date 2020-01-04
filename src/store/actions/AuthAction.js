@@ -4,6 +4,8 @@ import {LoginUser} from '../services/AuthService'
 export const signUp = (credentials) =>{
     console.log(credentials);
     return (dispatch)=>{
+        dispatch({type:'RESTART_AUTH_RESPONSE'});
+        dispatch({type:'LOADING'});
         if(credentials.password.length < 6){
             return dispatch({type: 'SHORT_PASSWORD'})
         }
@@ -13,6 +15,7 @@ export const signUp = (credentials) =>{
             if(res.token!==null){
                 localStorage.setItem("user",'Bearer '+res.token);
                 dispatch({type:'SIGNUP_SUCCESS'})
+                
             }else{
                 dispatch({type:'SIGNUP_ERROR',res})
             }
@@ -28,7 +31,10 @@ export const signUp = (credentials) =>{
 
 
 export const UserLogin = (credentials,history) =>{
+    
  return (dispatch)=>{
+    dispatch({type:'RESTART_AUTH_RESPONSE'});
+    dispatch({type:'LOADING'});
      if(credentials.password.length < 6)
      {
         return dispatch({type: 'SHORT_PASSWORD'})
@@ -41,7 +47,7 @@ export const UserLogin = (credentials,history) =>{
             setTimeout(() => {
                 history.push("/dashboard");     
             }, 3000);
-           
+            
         }else{
             dispatch({type:'LOGIN_ERROR',res})
         }
@@ -53,4 +59,12 @@ export const UserLogin = (credentials,history) =>{
     
      )
  }   
+}
+
+
+export const resetAuthResponsePerComponent = (dispatch) =>
+{
+  return (dispatch) =>{
+      dispatch({type:'RESTART_AUTH_RESPONSE'});
+  }
 }

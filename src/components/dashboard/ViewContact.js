@@ -10,8 +10,10 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {connect} from 'react-redux'
-import {loadContactUser,loadSearchContactUser } from '../../store/actions/ContactActions'
+import {loadContactUser,loadSearchContactUser,deleteContactUser } from '../../store/actions/ContactActions'
 
 
   
@@ -53,6 +55,23 @@ import {loadContactUser,loadSearchContactUser } from '../../store/actions/Contac
       
       }
 
+      loadEditpage = (e,id)=>
+      {
+        this.props.history.push('/dashboard/edit-contact/'+id);
+      }
+
+      DeleteContact = (e,id) =>
+      {
+        const confirmDialog  = window.confirm("are you sure you want to delete this contact?");
+        if(confirmDialog==true)
+        {
+          this.props.deleteContactUser(id);
+        }else{
+
+        }
+      }
+
+
     render() {
 
       const {loadContacts} = this.props;   
@@ -83,10 +102,12 @@ import {loadContactUser,loadSearchContactUser } from '../../store/actions/Contac
             <TableCell align="right">email</TableCell>
             <TableCell align="right">phonenumber</TableCell>
             <TableCell align="right">profile image</TableCell>
+            <TableCell align="right" >edit</TableCell>
+            <TableCell align="right" >delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {loadContacts? loadContacts.data.data.map(row => (
+          {loadContacts && loadContacts.hasOwnProperty('data')? loadContacts.data.data.map(row => (
             <TableRow key={row.id }>
               <TableCell component="th" scope="row">
                 {row.firstname}
@@ -97,6 +118,30 @@ import {loadContactUser,loadSearchContactUser } from '../../store/actions/Contac
               <TableCell align="right">
               
                 <img src={loadContacts.file_directory+"/"+row.image_file} width={50} height={50} /></TableCell>
+                <TableCell align="right">
+                <Button
+        variant="contained"
+        color="primary"
+        id={row.id}
+        onClick={(e)=>this.loadEditpage(e,row.id)}
+      >
+        Edit
+      </Button>
+                </TableCell>
+
+
+                <TableCell align="right">
+                <Button
+        variant="contained"
+        color="primary"
+        id={row.id}
+        onClick = {(e)=>this.DeleteContact(e,row.id)}
+      >
+        Delete
+      </Button>
+                </TableCell>
+
+
             </TableRow>
           ))
         :null
@@ -132,7 +177,8 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         loadContactUser: (page) => dispatch(loadContactUser(page)),
-        loadSearchContactUser :(search_content,page) => dispatch(loadSearchContactUser(search_content,page))
+        loadSearchContactUser :(search_content,page) => dispatch(loadSearchContactUser(search_content,page)),
+        deleteContactUser:(id) =>dispatch(deleteContactUser(id))
     }   
 }
 

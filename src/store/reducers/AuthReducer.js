@@ -3,8 +3,19 @@ authResponse:null
 }
 
 
+
 const AuthReducer = (state=initState, action) =>{
     switch(action.type){
+        case 'RESTART_AUTH_RESPONSE':
+            return {
+                ...state,
+                authResponse:null
+            }
+            case 'LOADING':
+                return {
+                    ...state,
+                    authResponse:'loading...'
+                }
         case 'SHORT_PASSWORD':
             console.log(action);
             return{

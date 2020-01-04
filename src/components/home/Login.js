@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
-import {UserLogin} from '../../store/actions/AuthAction'
+import {UserLogin,resetAuthResponsePerComponent} from '../../store/actions/AuthAction'
 
 
  class Login extends Component {
@@ -15,6 +15,11 @@ import {UserLogin} from '../../store/actions/AuthAction'
       password:''
     }
   }
+
+ componentDidMount = () =>
+ {
+   this.props.resetAuthResponsePerComponent();
+ }
 
    handleSubmit = (e)=>{
    e.preventDefault();
@@ -85,7 +90,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    UserLogin:(creds,history) => dispatch(UserLogin(creds,history))
+    UserLogin:(creds,history) => dispatch(UserLogin(creds,history)),
+    resetAuthResponsePerComponent:() =>dispatch(resetAuthResponsePerComponent()),
   }
 }
 

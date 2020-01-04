@@ -16,6 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 
 const Sidebar = (props) => {
@@ -24,7 +25,10 @@ const Sidebar = (props) => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  
+  const logOut = ()=>{
+    localStorage.removeItem('user');
+    props.props.history.push('/');
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -80,9 +84,13 @@ const Sidebar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             TechBuildz
           </Typography>
+     
+
+          <Button color="inherit" onClick={logOut}>Logout</Button>
+
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

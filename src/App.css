@@ -35,7 +35,12 @@
 .pagination-restyle li:hover{
   cursor: pointer;
 }
-
+.image-restyle{
+  width:100px;
+  height:100px;
+  margin-top:7px;
+  margin-bottom:7px;
+}
 
 @keyframes App-logo-spin {
   from {

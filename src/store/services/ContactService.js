@@ -56,9 +56,69 @@ export const loadSearchContacts = (search_content,page) =>{
         return data
     }).catch((error)=>{
         console.log(error)
+        return error
     })
     
 }
+
+export const loadSingleData =(id) =>
+{
+if(id==""){
+
+}else{
+    let getDataUrl = "user/contact/get-single/"+id;
+    const http = new HttpService();
+    return http.getData(getDataUrl).then((data)=>{
+        console.log(data);
+        return data
+    }).catch((error)=>{
+        console.log(error);
+        return error
+    })
+}
+
+}
+
+
+
+export const editSingleData = (data,id) =>
+{
+    if(id==""){
+
+    }else
+    {
+      const http = new HttpService();
+let editDataUrl = "user/contact/update/"+id;
+return http.postData(data,editDataUrl).then((data)=>{
+     console.log(data)
+    console.log(JSON.stringify(data));
+    return data;
+}).catch((error)=> {console.log(error)
+    return error; 
+     });
+}
+}
+
+
+export const deleteContact = (id) =>
+{
+    const data = {};
+
+   if(id=="")
+   {
+
+   }else{
+       const http = new HttpService();
+       let deleteUrl = "user/contact/delete/"+id;
+       return http.postData(data,deleteUrl).then((data)=>{
+        console.log(data)
+       console.log(JSON.stringify(data));
+       return data;
+   }).catch((error)=> {console.log(error)
+       return error; 
+        });
+   }
+   }
 
 
 
